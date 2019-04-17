@@ -92,9 +92,10 @@ static void *rx_thread(void *arg)
     }
 
     if(ret != LIQUID_FRAME64_LEN)
-      fprintf(stderr, "short read\n");
+      fprintf(stderr, "short read: %d\n", ret);
 
-    framesync64_execute(framesync, buffer, LIQUID_FRAME64_LEN);
+    if(ret > 0)
+      framesync64_execute(framesync, buffer, ret);
   }
 }
 
@@ -107,6 +108,8 @@ int main(int argc, char **argv)
   {
     return EXIT_FAILURE;
   }
+
+  radio_loopback_enable(&radio);
 
   pthread_create(&tx_tid, NULL, tx_thread, (void *)&radio);
   pthread_create(&rx_tid, NULL, rx_thread, (void *)&radio);

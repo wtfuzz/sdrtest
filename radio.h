@@ -14,5 +14,6 @@ typedef struct _radio_t
 } radio_t;
 
 int radio_open(const char *driver, double tx_frequency, radio_t *radio);
+int radio_loopback_enable(radio_t *radio);
 
 #endif

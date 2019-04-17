@@ -33,3 +33,13 @@ int radio_open(const char *driver, double tx_frequency, radio_t *radio)
 
   return 0;
 }
+
+int radio_loopback_enable(radio_t *radio)
+{
+  int ret;
+  // Enable loopback on the bladeRF
+  //ret = SoapySDRDevice_writeSetting(radio->device, "loopback", "rf_lna1");
+  ret = SoapySDRDevice_writeSetting(radio->device, "loopback", "bb_txlpf_rxvga2");
+  fprintf(stderr, "loopback ret %d\n", ret);
+  return 0;
+}
